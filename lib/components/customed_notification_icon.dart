@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:hafazny/screens/notification_screen/notification_screen.dart';
 
 import '../helper/image_helper.dart';
 
@@ -20,7 +23,7 @@ class CustomNotificationIcon extends StatelessWidget {
         child: IconButton(
           padding: EdgeInsets.zero,
           onPressed: () {
-            //AppRoutes.pushNamedNavigator(routeName: Routes.notification);
+           Get.to(NotificationScreen());
           },
           icon: SvgPicture.asset(
             ImagesHelper.notificationIcon,

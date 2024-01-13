@@ -4,12 +4,15 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:hafazny/screens/nav_bar_screen/nav_bar_screen.dart';
 import 'package:hafazny/screens/reservation_screen/reservation_screen.dart';
+import 'package:hafazny/screens/teacher_nav_bar_screen/teacher_reservation_screen.dart';
+import 'package:hafazny/screens/teacher_nav_bar_screen/teacher_session_detailes_screen.dart';
 import 'package:hafazny/screens/teacher_screen/controller/controller.dart';
 import 'package:hafazny/screens/teacher_screen/teacher_detailes_screen.dart';
 
 import '../../components/customed_back_arrow.dart';
 import '../../components/customed_button.dart';
 import '../../const/style.dart';
+import '../session_screen/session_detailes_screen.dart';
 
 class TeacherReservationSuccessScreen extends StatelessWidget {
   TeacherReservationSuccessScreen({super.key});
@@ -23,13 +26,14 @@ class TeacherReservationSuccessScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Align
                   (alignment: Alignment.centerLeft,
                   child: CustomArrowBack(),
                 ),
                 SizedBox(
-                  height: 50.h,
+                  height: 150.h,
                 ),
                 const CircleAvatar(
                   radius: 50,
@@ -52,38 +56,20 @@ class TeacherReservationSuccessScreen extends StatelessWidget {
                       .copyWith(color: ColorStyle.lightNavyColor),
                   textAlign: TextAlign.center,
                 ),
-                 SizedBox(
-                  height: 50.h,
-                ),
-                Column(
-                  children: List.generate(
-                    controller.content.length,
-                        (index) => Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            controller.content[index]['subTitle'],
-                            style: TextStyleHelper.body15.copyWith(
-                                color: ColorStyle.lightNavyColor,
-                                // fontWeight: FontWeight.bold
-                              ),
-                          ),
-                          Text(
-                            controller.content[index]['title'],
-                            style: TextStyleHelper.body15
-                                .copyWith(fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+
                 const Spacer(),
                 CustomButton(
                   onPressed: () {
-                    Get.to(NavBarScreen(currentIndex: 2,));
+                    //Get.to( ReservationsScreen(isTeacherNavBar: false,));
+                    // Get.to(NavBarScreen(currentIndex: 3,));
+                    Get.to(SessionsDetailsScreen());
+                  },
+                  text: 'دخول الجلسة',
+                ),
+                CustomButton(
+                  onPressed: () {
+                    Get.to( ReservationsScreen(isTeacherNavBar: false,));
+                    // Get.to(NavBarScreen(currentIndex: 3,));
                   },
                   text: 'راجع قائمة الحجوزات',
                 ),

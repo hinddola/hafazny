@@ -6,7 +6,6 @@ import 'package:hafazny/screens/auth_screens/controller/auth_validation.dart';
 import 'package:hafazny/screens/auth_screens/controller/forget_password_controller.dart';
 import 'package:hafazny/screens/auth_screens/controller/otp_controller.dart';
 
-import '../../../helper/shared_handeller.dart';
 import '../new_password_screen/new_password_repo.dart';
 
 class NewPasswordController extends GetxController with Validations{

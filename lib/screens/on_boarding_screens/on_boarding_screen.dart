@@ -18,7 +18,7 @@ class OnBoardingScreen extends StatelessWidget {
 
   final controller = Get.put(OnBoardingController());
   final authCOntroller = Get.put(AuthController());
-  final teacherController = Get.put(TeacherSuccessResController());
+  //final teacherController = Get.put(TeacherSuccessResController());
 
   @override
   Widget build(BuildContext context) {
@@ -97,8 +97,8 @@ class OnBoardingScreen extends StatelessWidget {
                                       // controller.roleId=1;
                                       authCOntroller.roleId='1';
                                       controller.isStudent= true;
-                                      print("role====");
-                                      print(authCOntroller.roleId);
+                                      // print("role====");
+                                      // print(authCOntroller.roleId);
                                     // controller.isStudent!?
                                      Get.to(RegisterScreen());
                                   },
@@ -110,9 +110,9 @@ class OnBoardingScreen extends StatelessWidget {
                                       // controller.roleId = 2;
                                       authCOntroller.roleId='2';
                                       controller.isStudent= false;
-
-                                      print("role====");
-                                      print(authCOntroller.roleId);
+                                      //
+                                      // print("role====");
+                                      // print(authCOntroller.roleId);
                                     Get.to(RegisterScreen());
                                   },
                                   text: 'الدخول كمعلم',

@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../const/style.dart';
 import '../helper/image_helper.dart';
+import '../screens/reservation_screen/controller/reservation_controller.dart';
 
 class StudentDetailsText extends StatelessWidget {
-  const StudentDetailsText({
+  //int index;
+  StudentDetailsText({
     super.key,
+    //required this.index
   });
+
+  final reserveController = Get.put(ReservationController());
 
   @override
   Widget build(BuildContext context) {

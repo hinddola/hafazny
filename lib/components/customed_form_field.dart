@@ -50,6 +50,19 @@ class CustomFormField extends StatefulWidget {
 
 class _CustomFormFieldState extends State<CustomFormField> {
   bool passwordVisible = true;
+  FocusNode _focusNode = FocusNode();
+  bool isFocused = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _focusNode.addListener(() {
+      setState(() {
+        isFocused = _focusNode.hasFocus;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,10 +73,10 @@ class _CustomFormFieldState extends State<CustomFormField> {
           widget.isSearch
               ? const SizedBox()
               : Text(
-                  widget.labelText,
-                  style: TextStyleHelper.body15
-                      .copyWith(fontWeight: FontWeight.bold),
-                ),
+            widget.labelText,
+            style: TextStyleHelper.body15
+                .copyWith(fontWeight: FontWeight.bold),
+          ),
           SizedBox(
             height: 10.h,
           ),
@@ -72,97 +85,93 @@ class _CustomFormFieldState extends State<CustomFormField> {
             validator: widget.validator,
             keyboardType: widget.keyboardType,
             textInputAction: TextInputAction.next,
+            cursorColor: ColorStyle.primaryColor,
+            cursorHeight: 25.h,
+            cursorWidth: 5.w,
             textAlign: TextAlign.end,
             obscureText: widget.isPassword ? passwordVisible : false,
             controller: widget.controller,
             enabled: true,
             style: TextStyleHelper.button13.copyWith(
                 height: 1.h,
-                fontWeight: FontWeight
-                    .normal) /* TextStyle(
-              height: 1.1.h,
-              fontSize: 16.sp,
-            ) */
-            ,
+                fontWeight: FontWeight.normal,
+                fontSize: 14.sp),
             decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder( borderSide: BorderSide(
+                  color: ColorStyle.lightNavyColor.withOpacity(0.2), // Set default border color
+                  width: 1.0,
+                ),),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: ColorStyle.primaryColor, width: 2.0),
+              ),
+              errorBorder:  OutlineInputBorder(
+    borderSide: BorderSide(color: ColorStyle.redColor, width: 2.0),
+    ),
               errorStyle: TextStyleHelper.caption11,
               fillColor: widget.fillColor ??
-                  Theme.of(context).colorScheme.background.withOpacity(.02),
+                  Theme.of(context)
+                      .colorScheme
+                      .background
+                      .withOpacity(.02),
               filled: true,
               prefixIcon: widget.isSearch
-                  ? Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: SvgPicture.asset(
-                        'assets/svg/search_icon.svg',
-                        //height: MediaQueryHelper.height * .03,
-                      ),
-                    )
+                  ? const Padding(
+                padding: EdgeInsets.all(12.0),
+                child: Icon(Icons.filter_alt_outlined,
+                    color: ColorStyle.primaryColor),
+              )
                   : widget.isAuth
-                      ? widget.isPassword
-                          ? IconButton(
-                              onPressed: () {
-                                passwordVisible = !passwordVisible;
-                              },
-                              icon: passwordVisible
-                                  ? SvgPicture.asset(
-                                      'assets/svg/invisible_password.svg',
-                                      height: 5.h,
-                                    )
-                                  : SvgPicture.asset(
-                                      'assets/svg/visible_password.svg',
-                                      height: 5.h,
-                                    ),
-                            )
-                          : const SizedBox()
-                      : Padding(
-                          padding: EdgeInsets.all(12.0.r),
-                          child: widget.iconWidget,
-                        ),
+                  ? widget.isPassword
+                  ? IconButton(
+                onPressed: () {
+                  setState(() {
+                    passwordVisible = !passwordVisible;
+                  }
+                  );
+                },
+                icon: passwordVisible
+                    ? SvgPicture.asset(
+                  'assets/svg/invisible_password.svg',
+                  height: 5.h,
+                )
+                    : SvgPicture.asset(
+                  'assets/svg/visible_password.svg',
+                  height: 5.h,
+                ),
+              )
+                  : const SizedBox()
+                  : Padding(
+                padding: EdgeInsets.all(12.0.r),
+                child: widget.iconWidget,
+              ),
               suffixIcon: widget.isSearch
                   ? Padding(
-                      padding: EdgeInsets.all(12.0.r),
-                      child: SvgPicture.asset(
-                        'assets/svg/filter_icon.svg',
-                        //height: 10.h,
-                      ),
-                    )
+                padding: EdgeInsets.all(12.0.r),
+                child: const Icon(Icons.search_rounded,
+                    color: ColorStyle.primaryColor),
+              )
                   : widget.isAuth
-                      ? Padding(
-                          padding: EdgeInsets.all(12.0.r),
-                          child: SvgPicture.asset(
-                            widget.icon,
-                            height: 2.h,
-                          ),
-                        )
-                      : SvgPicture.asset(
-                          widget.icon,
-                          height: 2.h,
-                        ),
+                  ? Padding(
+                padding: EdgeInsets.all(12.0.r),
+                child: SvgPicture.asset(
+                  widget.icon,
+                  height: 2.h,
+                ),
+              )
+                  : SvgPicture.asset(
+                widget.icon,
+                height: 2.h,
+              ),
               hintStyle: TextStyleHelper.button13.copyWith(
-                color:
-                    widget.hintColor ?? ColorStyle.backArrowColor.withOpacity(.5),
-                fontWeight: FontWeight.normal,
-              ),
+                  color: widget.hintColor ??
+                      ColorStyle.backArrowColor.withOpacity(.5),
+                  fontWeight: FontWeight.normal,
+                  fontSize: 14.sp),
               hintText: widget.hintText,
-              border: OutlineInputBorder(
-                //  borderSide: BorderSide(
-                //   style: BorderStyle.solid,
-                //   color: Colors.green,
-                // ),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(8.0.r),
-                ),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  style: BorderStyle.solid,
-                  color: ColorStyle.lightNavyColor.withOpacity(.1),
-                ),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(8.0.r),
-                ),
-              ),
             ),
+          ),
+          SizedBox(
+            height: 10.h,
           ),
         ],
       ),

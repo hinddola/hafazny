@@ -28,7 +28,7 @@ class CustomTeacherPackage extends StatelessWidget {
               backgroundColor: Colors.white,
               //strokeAlign: -1,
               strokeWidth: 70,
-              value: .3,
+              value: 1,
             ),
           ),
           Container(
@@ -54,11 +54,11 @@ class CustomTeacherPackage extends StatelessWidget {
                   style: TextStyleHelper.subtitle17
                       .copyWith(fontWeight: FontWeight.bold),
                 ),
-                Text('40.5 %', style: TextStyleHelper.title22),
-                Text(
-                  ' ساعات من 10',
-                  style: TextStyleHelper.caption11,
-                ),
+                Text('100 %', style: TextStyleHelper.title22),
+                // Text(
+                //   ' ساعات من 10',
+                //   style: TextStyleHelper.caption11,
+                // ),
                 SizedBox(
                   height: 10.h,
                 ),
@@ -94,7 +94,7 @@ class CustomTeacherPackage extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '1.883 \$',
+                    '00.00 \$',
                     style: TextStyleHelper.subtitle17.copyWith(
                         color: ColorStyle.whiteColor,
                         fontWeight: FontWeight.bold),

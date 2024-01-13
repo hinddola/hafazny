@@ -29,7 +29,6 @@ class CustomButton extends StatelessWidget {
       child: InkWell(
         onTap: onPressed,
         child: AnimatedContainer(
-          // padding: EdgeInsets.symmetric(horizontal: 16.w),
           width: width ?? 300 ,
           margin: EdgeInsets.symmetric(
             vertical: 8.r, /* horizontal: 16.r */
@@ -37,14 +36,9 @@ class CustomButton extends StatelessWidget {
           height : 50.h,
           curve: Curves.easeInOut,
           alignment: Alignment.center,
-          /* padding: EdgeInsets.symmetric(
-                            vertical: 8.r, horizontal: 32.r), */
           decoration: BoxDecoration(
               color: background ?? ColorStyle.primaryColor,
               borderRadius: BorderRadius.circular(4.r)
-            /* shape: state is RegisterLoading
-                              ? BoxShape.circle
-                              : null, */
           ),
           duration: const Duration(seconds: 1),
           child: child ??
@@ -54,8 +48,6 @@ class CustomButton extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     color: textColor ?? ColorStyle.whiteColor
                   ),
-                  // style: Theme.of(context).TextStyleHelper.button16
-                  //     .copyWith(color: textColor ?? Colors.white)
               ),
         ),
       ),

@@ -4,6 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:hafazny/model/EduLevelModel.dart';
+import 'package:hafazny/screens/auth_screens/controller/auth_controller.dart';
+import 'package:hafazny/screens/edu_favorites_screens/controller/edu_favourites_controller.dart';
 import 'package:hafazny/screens/profile_screen/controller/profile_controller.dart';
 
 import '../../components/custome_upload_image.dart';
@@ -12,14 +15,30 @@ import '../../components/customed_button.dart';
 import '../../components/customed_form_field.dart';
 import '../../const/style.dart';
 import '../../helper/image_helper.dart';
+import '../../model/PathModel.dart';
+import '../teacher_screen/controller/controller.dart';
 
 class EditProfileScreen extends StatelessWidget {
   EditProfileScreen({super.key});
 
   final controller = Get.put(ProfileController());
+  EduLevelModel eduLevelModel = EduLevelModel();
+  final authController = Get.put(AuthController());
+  final eduFavouritesController = Get.put(EduFavouritesController());
+  final user = AuthController().getUserData();
+  final sIngleUserModel = ProfileController().sIngleUserModel;
+
+  final teacherController = Get.put(TeacherSuccessResController());
+
 
   @override
   Widget build(BuildContext context) {
+    controller.fullNameController.text = user?.name;
+    controller.phoneNumberController.text = user?.phone;
+    controller.emailController.text = user?.email;
+    controller.genderController.text = user?.gender == 'male' ? 'ذكر' : 'انثى';
+
+
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 90.w,
@@ -54,12 +73,12 @@ class EditProfileScreen extends StatelessWidget {
                       SizedBox(
                         height: 10.h,
                       ),
-                       Center(child: Text(
-                           'محمد ابراهيم احمد' ,
+                      Center(child: Text(
+                           '${user?.name}' ,
                            style: TextStyleHelper.body15
                                .copyWith(fontWeight: FontWeight.bold))
                        ),
-                       SizedBox(
+                      SizedBox(
                         height: 10.h,
                       ),
                       Container(
@@ -68,7 +87,8 @@ class EditProfileScreen extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Text('بيانات الحساب',
+                            Text(
+                              'بيانات الحساب',
                                 style: TextStyleHelper.title22.copyWith(
                                     color: ColorStyle.navyColor ,
                                   fontSize: 20.sp
@@ -77,7 +97,7 @@ class EditProfileScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                       SizedBox(
+                      SizedBox(
                         height: 10.h,
                       ),
                       CustomFormField(
@@ -86,11 +106,11 @@ class EditProfileScreen extends StatelessWidget {
                           //   validator: isValidName,
                           hintText:
                           controller.fullNameController.text,
-                          iconWidget:
-                          SvgPicture.asset(
-                            ImagesHelper.editFieldIcon ,
-                            color: ColorStyle.lightNavyColor.withOpacity(0.5),
-                          ),
+                          // iconWidget:
+                          // SvgPicture.asset(
+                          //   ImagesHelper.editFieldIcon ,
+                          //   color: ColorStyle.lightNavyColor.withOpacity(0.5),
+                          // ),
                           isAuth: false,
                           keyboardType: TextInputType.name,
                           controller:controller.fullNameController),
@@ -101,35 +121,34 @@ class EditProfileScreen extends StatelessWidget {
                         // validator: isValidPhone,
                           isLabeled: true,
                           labelText: 'رقم الجوال',
-                          iconWidget:
-                          SvgPicture.asset(ImagesHelper.editFieldIcon ,
-                            color: ColorStyle.lightNavyColor.withOpacity(0.5),
-                          ),
+                          // iconWidget:
+                          // SvgPicture.asset(ImagesHelper.editFieldIcon ,
+                          //   color: ColorStyle.lightNavyColor.withOpacity(0.5),
+                          // ),
                           isAuth: false,
                           hintText:
                           controller.phoneNumberController.text,
                           keyboardType: TextInputType.number,
                           controller:
                           controller.phoneNumberController),
-                       SizedBox(
+                      SizedBox(
                         height: 10.h,
                       ),
                       CustomFormField(
                           isLabeled: true,
                           labelText: 'البريد الالكتروني',
                           //  validator: isValidEmail,
-                          iconWidget:
-                          SvgPicture.asset(ImagesHelper.editFieldIcon,
-                            color: ColorStyle.lightNavyColor.withOpacity(0.5),
-                          ),
+                          // iconWidget:
+                          // SvgPicture.asset(ImagesHelper.editFieldIcon,
+                          //   color: ColorStyle.lightNavyColor.withOpacity(0.5),
+                          // ),
                           isAuth: false,
                           hintText: controller.emailController.text,
                           keyboardType: TextInputType.emailAddress,
                           controller: controller.emailController),
-                       SizedBox(
+                      SizedBox(
                         height: 10.h,
                       ),
-                      // const Spacer(),
                       CustomFormField(
                         // validator: isValidPhone,
                           isLabeled: true,
@@ -139,96 +158,122 @@ class EditProfileScreen extends StatelessWidget {
                           isAuth: false,
                           hintText:
                           controller.genderController.text,
-                          keyboardType: TextInputType.number,
+                          keyboardType: TextInputType.text,
                           controller:
                           controller.genderController),
-                       SizedBox(
+                      SizedBox(
                         height: 10.h,
                       ),
-                      CustomFormField(
-                        // validator: isValidPhone,
-                          isLabeled: true,
-                          labelText: 'حدد الجنسية',
-                          iconWidget:
-                          SvgPicture.asset(ImagesHelper.dropDownIcon),
-                          isAuth: false,
-                          hintText:
-                          controller.nationalityController.text,
-                          keyboardType: TextInputType.number,
-                          controller:
-                          controller.nationalityController),
-                       SizedBox(
+                      // CustomFormField(
+                      //   // validator: isValidPhone,
+                      //     isLabeled: true,
+                      //     labelText: 'حدد الجنسية',
+                      //     iconWidget:
+                      //     SvgPicture.asset(ImagesHelper.dropDownIcon),
+                      //     isAuth: false,
+                      //     hintText:
+                      //     controller.nationalityController.text,
+                      //     keyboardType: TextInputType.text,
+                      //     controller:
+                      //     controller.nationalityController),
+                      SizedBox(
                         height: 40.h,
                       ),
-                      Container(
-                        height: 60.h,
-                        color: ColorStyle.backArrowColor.withOpacity(0.1),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              'تفضيلات المعلم',
-                              style: TextStyleHelper.title22.copyWith(
-                                  color: ColorStyle.navyColor ,
-                                  fontSize: 20.sp
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+
+                      user.roleId == 1 ?
+                      Column(
+                        children: [
+                          FutureBuilder(
+                            future: eduFavouritesController.getPaths(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                return Center(child: Container(
+                                    height: 50.h,
+                                    width: 50.w,
+                                    child: CircularProgressIndicator(
+                                        color: ColorStyle.primaryColor
+                                    )));
+                              } else if (snapshot.hasError) {
+                                return Text('Error loading data');
+                              } else {
+                                return Container(
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: ClampingScrollPhysics(),
+                                    itemCount: eduFavouritesController.pathsList.length ?? 0,
+                                    itemBuilder: (context, index) {
+                                      final path = eduFavouritesController.pathsList![index];
+                                      var slt_id = null;
+
+                                      sIngleUserModel.userPaths?.map((value) {
+
+                                        if (value.id == path.id) {
+                                          slt_id = value.pathItemId;
+                                        }
+                                      });
+                                      return Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                '${path?.title}',
+                                                style: TextStyleHelper.title22.copyWith(
+                                                  color: ColorStyle.navyColor,
+                                                  fontSize: 20.sp,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          DropdownButtonFormField(
+                                            decoration: const InputDecoration(
+                                              isDense: true,
+                                              border: OutlineInputBorder(),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(color: ColorStyle.primaryColor, width: 2.0),
+                                              ),
+                                            ),
+                                            hint: Text('حدد المسارات التعليمية'),
+
+                                            value: slt_id,  // Set the correct selected value here
+                                            items: path.pathItems?.map((value) {
+                                              return DropdownMenuItem(
+                                                value: value.id,  // Ensure that id is unique
+                                                child: Text('${value.title}'),
+                                              );
+                                            }).toList(),
+                                            onChanged: (selectedValue) {
+                                              eduFavouritesController.selectedValue(selectedValue as int?);
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  ),
+                                );
+                              }
+                            },
+                          ) ,
+
+                        ],
+                      ):
+
                       SizedBox(
-                        height: 10.h,
+                        height: 30.h,
                       ),
-                      CustomFormField(
-                        // validator: isValidPhone,
-                          isLabeled: true,
-                          labelText: 'المسار التعليمي المراد تعلمة',
-                          iconWidget:
-                          SvgPicture.asset(ImagesHelper.dropDownIcon),
-                          isAuth: false,
-                          hintText:
-                          controller.eduTrackController.text,
-                          keyboardType: TextInputType.number,
-                          controller:
-                          controller.eduTrackController),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      CustomFormField(
-                        // validator: isValidPhone,
-                          isLabeled: true,
-                          labelText: 'الفئة العمرية التى تنتمي إليها',
-                          iconWidget:
-                          SvgPicture.asset(ImagesHelper.dropDownIcon),
-                          isAuth: false,
-                          hintText:
-                          controller.ageRangeController.text,
-                          keyboardType: TextInputType.number,
-                          controller:
-                          controller.ageRangeController),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      CustomFormField(
-                        // validator: isValidPhone,
-                          isLabeled: true,
-                          labelText: 'مستوي القراء والتسميع',
-                          iconWidget:
-                          SvgPicture.asset(ImagesHelper.dropDownIcon),
-                          isAuth: false,
-                          hintText:
-                          controller.readWritelevelController.text,
-                          keyboardType: TextInputType.number,
-                          controller:
-                          controller.readWritelevelController),
-                       SizedBox(
-                        height: 10.h,
-                      ),
+
                       Align(
                         alignment: Alignment.bottomCenter,
                         child: CustomButton(
                           onPressed: () {
-                            Navigator.pop(context);
+                            controller.updateUserData(
+                                name: controller.fullNameController,
+                                email: controller.emailController,
+                                // roleId: onBoardingController.roleId,
+                                phone: controller.phoneNumberController,
+                                gender: controller.genderController,
+                            );
+                            // Navigator.pop(context);
                           },
                           child: Text(
                             'حفظ التعديلات',

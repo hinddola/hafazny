@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:hafazny/screens/teacher_screen/teacher_detailes_screen.dart';
 
 import '../../components/customed_app_bar.dart';
 import '../../components/customed_dots.dart';
@@ -27,38 +28,28 @@ class StudentHomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomAppBar(isMainScreen: true,),
+              CustomAppBar(
+                isMainScreen: true,
+              ),
               SizedBox(
                 height: 20.h,
               ),
-              Container(
-                width: 450.w,
-                height: 200.h,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Image.asset(
-                  'assets/images/quran.png', // Adjust the image path
-                  fit: BoxFit.fill,
-                ),
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-              GetBuilder<HomeController>(
-                builder: (controller) => Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(
-                    3,
-                        (index) => CustomDots(
-                      width: 30.w,
-                      color: 0 == index
-                          ? ColorStyle.primaryColor
-                          : ColorStyle.lightNavyColor.withOpacity(.1),
-                    ),
-                  ),
-                ),
-              ),
+              FutureBuilder(
+                  future: controller.getImageSlider(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: Container(
+                        height: 50.h,
+                          width: 50.w,
+                          child: CircularProgressIndicator(
+                              color: ColorStyle.primaryColor
+                          )));
+                    } else if (snapshot.hasError) {
+                      return Text('Error loading data');
+                    } else {
+                      return CustomSlider();
+                    }
+                  }),
               SizedBox(
                 height: 25.h,
               ),
@@ -78,57 +69,70 @@ class StudentHomeScreen extends StatelessWidget {
                 children: [
                   Text(
                     'المعلمون الاكثر تقييما',
-                    style: TextStyleHelper.subtitle17.copyWith(fontWeight: FontWeight.bold),
+                    style: TextStyleHelper.subtitle17
+                        .copyWith(fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
               const SizedBox(
                 height: 10,
               ),
-              Container(
-                height: 120,
-                child: ListView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: 10,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) => Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Column(
-                      children: [
-                        Stack(
-                          children: [
-                            CircleAvatar(
-                              radius: 35,
-                              backgroundColor: ColorStyle.greyColor,
-                              child: Image.asset(
-                                'assets/images/user-128.png', // Adjust the image path
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                            Positioned(
-                              bottom: 0,
-                              right: 7,
-                              child: CircleAvatar(
-                                radius: 9,
-                                backgroundColor: ColorStyle.greenColor.withOpacity(.1),
-                                child: const CircleAvatar(
-                                  radius: 7,
-                                  backgroundColor: ColorStyle.greenColor,
+              FutureBuilder(
+                  future: controller.getTeachersDetailes(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: Container(
+                          height: 50.h,
+                          width: 50.w,
+                          child: CircularProgressIndicator(
+                              color: ColorStyle.primaryColor
+                          )));
+                    } else if (snapshot.hasError) {
+                      return Text('Error loading data');
+                    } else {
+                      return Container(
+                        height: 120,
+                        child: ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: controller.teachersDetailesModel.teachers?.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) => Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Column(
+                              children: [
+                                GestureDetector(
+                                  onTap: (){
+                                    final u = controller.teachersDetailesModel.teachers![index];
+
+                                    Get.to(TeacherDetialsScreen(u: u,));
+                                  },
+                                  child: Stack(
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 35,
+                                        backgroundColor: ColorStyle.greyColor,
+                                        child: Image.asset(
+                                          'assets/images/219986.png',
+                                          // Adjust the image path
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+
+                                    ],
+                                  ),
                                 ),
-                              ),
+                                Text(
+                                  controller.teachersDetailesModel.teachers?[index].name ?? '',
+                                  style: TextStyleHelper.caption11,
+                                ),
+                                TeacherRate(),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
-                        Text(
-                          'محمد ابراهيم احمد ',
-                          style: TextStyleHelper.caption11,
-                        ),
-                        TeacherRate(),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+                      );
+                    }
+                  }),
             ],
           ),
         ),

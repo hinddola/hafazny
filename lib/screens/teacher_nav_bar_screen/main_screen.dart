@@ -14,12 +14,15 @@ import '../../components/customed_slider.dart';
 import '../../components/teacher_rate.dart';
 import '../../const/style.dart';
 import '../../helper/image_helper.dart';
+import '../reservation_screen/controller/reservation_controller.dart';
 import 'controller/teacher_nav_bar_controller.dart';
 
 class MainScreen extends StatelessWidget {
   MainScreen({Key? key}) : super(key: key);
 
   final controller = Get.put(TeacherNavBarController());
+  final reserveController = Get.put(ReservationController());
+
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +76,7 @@ class MainScreen extends StatelessWidget {
                   width: 200.w,
                 ),
                 Text(
-                  'متاح الأن',
+                  'غير متاح الأن',
                   style: TextStyleHelper.subtitle19.copyWith(
                       fontSize: 18.sp, color: ColorStyle.primaryColor),
                 ),
@@ -113,7 +116,7 @@ class MainScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Text(
-                '4.7',
+                '0.0',
                 style: TextStyleHelper.body15
                     .copyWith(fontWeight: FontWeight.bold),
               ),
@@ -140,39 +143,39 @@ class MainScreen extends StatelessWidget {
           SizedBox(
             height: 30.h,
           ),
-          Container(
-            height: 120,
-            child: ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              itemCount: 10,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Column(
-                  children: [
-                    Stack(
-                      children: [
-                        CircleAvatar(
-                          radius: 35,
-                          backgroundColor: ColorStyle.greyColor,
-                          child: Image.asset(
-                            'assets/images/user-128.png', // Adjust the image path
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Text(
-                      'محمد ابراهيم احمد ',
-                      style: TextStyleHelper.caption11.copyWith(
-                        fontSize: 14.sp
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+
+          Center(child: Text('لا توجد مكالمات بعد' , style: TextStyle(color: ColorStyle.primaryColor, fontWeight: FontWeight.bold),)),
+          // Container(
+          //   height: 120,
+          //   child: ListView.builder(
+          //     physics: const BouncingScrollPhysics(),
+          //     itemCount: reserveController.teacherSessions.lectures!.length,
+          //     scrollDirection: Axis.horizontal,
+          //     itemBuilder: (context, index) => Padding(
+          //       padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          //       child: Column(
+          //         children: [
+          //           Stack(
+          //             children: [
+          //               CircleAvatar(
+          //                 radius: 35,
+          //                 backgroundColor: ColorStyle.greyColor,
+          //                 child: Image.asset(
+          //                   'assets/images/user-128.png', // Adjust the image path
+          //                   fit: BoxFit.fill,
+          //                 ),
+          //               ),
+          //             ],
+          //           ),
+          //           Text(
+          //             '${reserveController.teacherSessions.lectures![index]?.student?.name!}',
+          //             style: TextStyleHelper.body15.copyWith(fontWeight: FontWeight.bold),
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     )

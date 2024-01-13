@@ -74,8 +74,9 @@ class TeacherRateScreen extends StatelessWidget {
                 keyboardType: TextInputType.text,
                 controller: commentController,
               ),
+
               SizedBox(
-                height: 180.h,
+                height: 150.h,
               ),
               CustomButton(
                 onPressed: () {},

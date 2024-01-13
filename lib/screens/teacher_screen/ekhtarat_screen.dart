@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:hafazny/components/ekhtarat_teacher_card.dart';
 
 import '../../components/customed_app_bar.dart';
 import '../../components/customed_back_arrow.dart';
 import '../../components/teacher_detailes_card.dart';
 import '../../const/style.dart';
+import 'controller/alert_controller.dart';
 
 class EkhtaratScreen extends StatelessWidget {
   EkhtaratScreen({super.key});
+
+  final alertController = Get.put(ALertController());
 
   @override
   Widget build(BuildContext context) {

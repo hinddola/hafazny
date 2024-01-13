@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:hafazny/screens/nav_bar_screen/nav_bar_screen.dart';
 import 'package:hafazny/screens/session_screen/controller/session_controller.dart';
+import 'package:hafazny/screens/session_screen/session_screen.dart';
+import 'package:hafazny/screens/start_call_screen/start_call_screen.dart';
 import 'package:hafazny/screens/teacher_screen/teacher_rate_screen.dart';
 
 import '../../components/active_avatar.dart';
@@ -15,11 +17,17 @@ import '../../components/session_detailes_card.dart';
 import '../../components/teacher_detailes_text.dart';
 import '../../const/style.dart';
 import '../../helper/image_helper.dart';
+import '../home_screen/controller/home_controller.dart';
+import '../teacher_screen/controller/controller.dart';
 
 class SessionsDetailsScreen extends StatelessWidget {
-   SessionsDetailsScreen({super.key});
+  final u ;
+   SessionsDetailsScreen({super.key , this.u});
 
   final controller = Get.put(SessionController());
+  final teachersuccessController = Get.put(TeacherSuccessResController());
+  final homeController = Get.put(HomeController());
+
 
 
   @override
@@ -37,25 +45,25 @@ class SessionsDetailsScreen extends StatelessWidget {
         backgroundColor: ColorStyle.whiteColor,
         elevation: .0,
         leading: const CustomArrowBack(),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10.0),
-            child: Container(
-              decoration: BoxDecoration(
-                  color: ColorStyle.backArrowColor.withOpacity(.1),
-                  shape: BoxShape.circle
-              ),
-              child: IconButton(
-                  onPressed: (){},
-                  icon: Image.asset(
-                    'assets/images/Vector.png',
-                    width: 25.w,
-                    height: 25.h,
-                  )
-              ),
-            ),
-          )
-        ],
+        // actions: [
+        //   Padding(
+        //     padding: const EdgeInsets.only(right: 10.0),
+        //     child: Container(
+        //       decoration: BoxDecoration(
+        //           color: ColorStyle.backArrowColor.withOpacity(.1),
+        //           shape: BoxShape.circle
+        //       ),
+        //       child: IconButton(
+        //           onPressed: (){},
+        //           icon: Image.asset(
+        //             'assets/images/Vector.png',
+        //             width: 25.w,
+        //             height: 25.h,
+        //           )
+        //       ),
+        //     ),
+        //   )
+        // ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -75,24 +83,30 @@ class SessionsDetailsScreen extends StatelessWidget {
                   borderRadius: const BorderRadius.all(Radius.circular(4)),
                 ),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: SvgPicture.asset(ImagesHelper.deleteIcon),
+                    GestureDetector(
+                      onTap: (){
+                        Get.to(StartCallScreen());
+                      },
+                        child: Icon(
+                          Icons.play_circle_outlined ,
+                          color: ColorStyle.primaryColor,
+                          size: 50.sp,
+                        )),
+                    Text(
+                      'بدأ الجلسة' ,
+                      style: TextStyleHelper.body15
+                          .copyWith(fontWeight: FontWeight.bold),
                     ),
-                    const Spacer(),
-                    const TeacherDetailsText(
-                      isSessions: true,
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-
-                    const ActiveAvatar(isSessions: true),
-
                   ],
                 ),
+
+
+
               ),
+
+
               Container(
                 padding: const EdgeInsets.all(16),
                 margin: const EdgeInsets.only(bottom: 16),
@@ -124,24 +138,7 @@ class SessionsDetailsScreen extends StatelessWidget {
                               inactiveColor: ColorStyle.primaryColor.withOpacity(0.2),
                             ),
                         ),
-                        Container(
-                          width: 30.w,
-                          height: 30.h,
-                          padding: EdgeInsets.all(4.0), // Adjust the padding as needed
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: ColorStyle.primaryColor, // Choose the border color
-                              width: 1.0, // Adjust the border width
-                            ),
-                          ),
-                          child: SvgPicture.asset(
-                            'assets/svg/triangle.svg',
-                            color: ColorStyle.primaryColor,
-                            width: 5.w,
-                            height: 5.h,
-                          ),
-                        )
+                        Icon(Icons.play_circle_outlined , color: ColorStyle.primaryColor, ),
                       ],
                     ),
                   ],
@@ -176,7 +173,7 @@ class SessionsDetailsScreen extends StatelessWidget {
                     Text(
                       'يساعدك تحديد هذه المعلومات على تجربة تعليمية مناسبة لك وتسهيل الوصول لمعلم القران المناسب',
                       style: TextStyleHelper.body15.copyWith(
-                          color: ColorStyle.lightNavyColor,
+                        color: ColorStyle.lightNavyColor,
                       ),
                       textAlign: TextAlign.end,
                     ),
@@ -192,20 +189,24 @@ class SessionsDetailsScreen extends StatelessWidget {
                   style: TextStyleHelper.button16.copyWith(color: Colors.white),
                 ),
               ),
-              CustomButton(
-                onPressed: () {
-                  Get.to(NavBarScreen(currentIndex: 1));
-                  //Navigator.pop(context);
-                },
-                background: ColorStyle.skipTextColor,
-                child: Text(
-                  'العودة للجلسات',
-                  style: TextStyleHelper.button16.copyWith(color: Colors.white),
-                ),
-                //textColor: Theme.of(context).colorScheme.secondary,
-              ),
+              // CustomButton(
+              //   onPressed: () {
+              //     Get.to(SessionsScreen());
+              //    // Get.to(NavBarScreen(currentIndex: 1));
+              //     //Navigator.pop(context);
+              //   },
+              //   background: ColorStyle.skipTextColor,
+              //   child: Text(
+              //     'العودة للجلسات',
+              //     style: TextStyleHelper.button16.copyWith(color: Colors.white),
+              //   ),
+              //   //textColor: Theme.of(context).colorScheme.secondary,
+              // ),
             ],
           ),
+
+
+
         ),
       ),
     );

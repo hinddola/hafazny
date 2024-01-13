@@ -1,39 +1,47 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hafazny/model/EduLevelModel.dart';
+import 'package:multi_select_flutter/dialog/mult_select_dialog.dart';
 
 import '../../../helper/api_url/api_url.dart';
 import '../../../model/CertificateModel.dart';
 import 'package:http/http.dart' as http ;
 
 import '../../auth_screens/controller/auth_controller.dart';
+import '../../teacher_nav_bar_screen/teacher_nav_bar_screen.dart';
 
 class TeacherSuccessResController extends GetxController{
 
   final shortInfocontroller = TextEditingController();
-  final selectedcontroller = TextEditingController();
-  final eduLevelcontroller = TextEditingController();
   RxInt selectedEduLevel = RxInt(0);
 
-  RxInt chosenContent = RxInt(-1);
-  RxInt partMemorized = RxInt(-1);
-
+  RxList<int> chosenContent = <int>[].obs;
+  RxList<int> chosenEduLevel = <int>[].obs;
+  //RxInt chosenEduLevel = RxInt(-1);
 
   final authController = AuthController();
 
+  CertificateModel certificateModel = CertificateModel();
+  EduLevelModel eduLevelModel = EduLevelModel();
+
+  RxList<CertificateModel> selectedCertificates = <CertificateModel>[].obs;
+  RxList<EduLevelModel> eduLevelList = <EduLevelModel>[].obs;
+  RxList certificateList = [].obs;
+
+
   @override
-  onInit(){
+  void onInit(){
     super.onInit();
     getEducationLevels();
-    // getCertifications();
+    getCertifications();
+    // print('LENGTH : ${certificateModel.certifications?.length}');
   }
+
   ApiUrl apiUrl = ApiUrl();
 
-  RxList<EduLevelModel> eduLevelList = <EduLevelModel>[].obs;
-  RxList<CertificateModel> certificateList = <CertificateModel>[].obs;
-  RxList<CertificateModel> selectedCertificates = <CertificateModel>[].obs;
 
 
   List<Map<String, dynamic>> content = [
@@ -55,23 +63,6 @@ class TeacherSuccessResController extends GetxController{
     },
   ];
 
-  // List<String> dataContent = [
-  //   'الكل',
-  //   'تلقين',
-  //   'مراجعة',
-  //   'إقراء واجازة',
-  //   'حفظ وتثبيت',
-  //   'تصحيح التلاوة'
-  // ];
-  // List<String> partMemorizedList = [
-  //   'الكل',
-  //   'جزء',
-  //   'سورة',
-  //   'صفحات',
-  // ];
-
-
-
   updateSelectedEduLevel(int value) {
     selectedEduLevel(value);
     update();
@@ -80,7 +71,6 @@ class TeacherSuccessResController extends GetxController{
   // Get all Education Levels
   getEducationLevels() async {
     try {
-      print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaah");
       final response = await http.get(
         Uri.parse(apiUrl.education_levels),
         headers: {
@@ -88,30 +78,18 @@ class TeacherSuccessResController extends GetxController{
         },
       );
 
-      print("response.body");
-      print(response.body);
-
       if (response.statusCode == 200) {
-        final eduLevelModel = EduLevelModel.fromJson(jsonDecode(response.body));
-        print('print model');
-        print(eduLevelModel.educationLevels);
-
-        if (eduLevelModel.educationLevels != null) {
-          eduLevelList.value = eduLevelModel.educationLevels!.cast<EduLevelModel>();
-          // !.map((educationLevel) =>
-          //     EduLevelModel.fromJson(educationLevel.toJson()))
-          //     .toList();
-
-          print(eduLevelList.value);
-        }
+        eduLevelModel = EduLevelModel.fromJson(jsonDecode(response.body));
       }
     } catch (e) {
       print('Error fetching eduLevelModel: $e');
     }
   }
 
+
+
   // Get all Certifications
-  Future<void> getCertifications() async {
+  getCertifications() async {
     try {
       final response = await http.get(
         Uri.parse(apiUrl.certifications),
@@ -121,45 +99,49 @@ class TeacherSuccessResController extends GetxController{
       );
 
       if (response.statusCode == 200) {
-        final certificatModel = CertificateModel.fromJson(jsonDecode(response.body));
-        print('print model');
-        print(certificatModel.certifications?[0].name);
 
-        if (certificatModel.certifications != null) {
-          certificateList.value = certificatModel.certifications!
-              .map((item) => CertificateModel.fromJson(item.toJson())).toList();
-        }
+        certificateModel = CertificateModel.fromJson(jsonDecode(response.body));
       }
     } catch (e) {
-      print('Error fetching eduLevelModel: $e');
+      print('Error fetching _certificatModel: $e');
     }
   }
 
   // create teacher profile
-  createTeacherProfile() async {
+  createTeacherProfile({
+    BuildContext? context
+  }) async {
     final user = authController.getUserData();
-
+    print("check user ${user?.id}");
     if (user != null) {
       try {
         final reqBody = {
           "user_id": user?.id,
           "bio": shortInfocontroller.text,
-          "education_level_id": selectedEduLevel.value
+          "education_level_id": chosenEduLevel.value[0]
         };
 
-        print(reqBody);
-
         final response = await http.post(
-            Uri.parse(apiUrl.teacher_profiles),
+            Uri.parse(apiUrl.teacherProfile),
             headers: {"Content-Type": "application/json"},
             body: jsonEncode(reqBody)
         );
 
-        print("response teacher profile ");
-        print(response.body);
+        if (response.statusCode == 201)
+          {
+            Get.to(TeacherNavBarScreen(currentIndex: 0));
+
+          } else {
+          print("error ${response.body}");
+
+          Get.to(TeacherNavBarScreen(currentIndex: 0));
+
+        }
 
       } catch(e) {
         print("The Error: $e");
+
+
       }
 
     }
@@ -167,4 +149,12 @@ class TeacherSuccessResController extends GetxController{
 
   }
 
+  saveData(){
+    getCertifications();
+    getEducationLevels();
+    Get.to(TeacherNavBarScreen(currentIndex: 3));
+  }
+
+
 }
+

@@ -55,7 +55,7 @@ class TeacherBalance extends StatelessWidget {
                       )
                   ),
                   Text(
-                    '24.44 \$',
+                    '00.00 \$',
                       style:
                       TextStyleHelper.subtitle19.copyWith(
                           fontSize: 32.sp,

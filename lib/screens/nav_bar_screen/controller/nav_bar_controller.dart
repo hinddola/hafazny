@@ -25,7 +25,7 @@ class NavBarController extends GetxController{
     {//0
       'title': 'القائمة',
       'icon': ImagesHelper.menuIcon,
-      'screen':  MenuScreen()
+      'screen':  MenuScreen(isStudent: true,)
     },
     {//1
       'title': 'الجلسات',

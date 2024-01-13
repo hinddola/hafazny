@@ -29,7 +29,7 @@ class SharedPreferanceHelper {
     return await sharedPreferences!.setDouble(key, value);
   }
 
-  static Future<bool> clearData(String? key) async {
+  static Future<bool> removeData(String? key) async {
     return await sharedPreferences!.remove(key!);
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:hafazny/screens/teacher_nav_bar_screen/teacher_reservation_screen.dart';
 
 import '../../const/style.dart';
 import '../../helper/image_helper.dart';
@@ -22,8 +23,8 @@ class TeacherNavBarScreen extends StatelessWidget {
 
   final controller = Get.put(TeacherNavBarController());
   List <Widget> screens = [
-    MenuScreen(),
-    ReservationsScreen(isTeacherNavBar: true),
+    MenuScreen(isStudent: false,),
+    TeacherReservationsScreen(),
     CallsHistoryScreen(),
     MainScreen(),
   ];

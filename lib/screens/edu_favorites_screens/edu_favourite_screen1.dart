@@ -6,6 +6,7 @@ import '../../components/customed_button.dart';
 import '../../components/customed_dots.dart';
 import '../../components/radio_container.dart';
 import '../../model/PathModel.dart';
+import '../packages_screen/packages_screen.dart';
 import 'controller/edu_favourites_controller.dart';
 
 class EduFavouriteFirstScreen extends StatelessWidget {
@@ -50,7 +51,7 @@ class EduFavouriteFirstScreen extends StatelessWidget {
                       future: controller.getPaths(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
+                          return Center(child: CircularProgressIndicator(color: ColorStyle.primaryColor,));
                         } else if (snapshot.hasError) {
                           return Center(child: Text('Error loading data'));
                         } else {
@@ -100,7 +101,8 @@ class EduFavouriteFirstScreen extends StatelessWidget {
                       ? CustomButton(
                         onPressed: () {
                           if (controller.selectedValue.value != 0){
-                            controller.goToHomeScreen();
+                            Get.to(PackagesScreen());
+                            //controller.goToHomeScreen();
                           } else {
                             Get.snackbar('You must select one of items', '',
                               snackPosition: SnackPosition.BOTTOM,

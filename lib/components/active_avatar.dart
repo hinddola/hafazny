@@ -16,19 +16,19 @@ class ActiveAvatar extends StatelessWidget {
           radius: 30,
           backgroundColor: Colors.grey,
           backgroundImage: AssetImage('assets/images/219986.png'),
-        ),
-        isSessions
-            ? const SizedBox()
-            : Positioned(
-                bottom: 0,
-                right: 6,
-                child: CircleAvatar(
-                  radius: 6,
-                  backgroundColor: Colors.green.withOpacity(.5),
-                  child: const CircleAvatar(
-                      radius: 5, backgroundColor: Colors.green),
-                ),
-              )
+         ),
+        // isSessions
+        //     ? const SizedBox()
+        //     : Positioned(
+        //         bottom: 0,
+        //         right: 6,
+        //         child: CircleAvatar(
+        //           radius: 6,
+        //           backgroundColor: Colors.green.withOpacity(.5),
+        //           child: const CircleAvatar(
+        //               radius: 5, backgroundColor: Colors.green),
+        //         ),
+        //       )
       ],
     );
   }

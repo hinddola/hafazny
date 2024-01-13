@@ -19,7 +19,7 @@ class TeacherRate extends StatelessWidget {
           width: 5,
         ),
         Text(
-          '4.5',
+          '0.0',
           style: TextStyleHelper.caption11,
         ),
       ],

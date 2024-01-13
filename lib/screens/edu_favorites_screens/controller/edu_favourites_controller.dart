@@ -66,6 +66,7 @@ class EduFavouritesController extends GetxController {
       }
     }catch(e){
       print('Error fetching paths: $e');
+      print(Uri.parse(apiUrl.paths));
     }
   }
 
@@ -82,9 +83,14 @@ class EduFavouritesController extends GetxController {
     } else {
 
       final pathItems = pathsList[(currentItem.value + 1)]?.pathItems;
-      final FuturePathItems = pathsList[(currentItem.value + 2)]?.pathItems;
 
-      if (FuturePathItems?.length == 0) {
+
+      final int wrappedIndex = (currentItem.value + 2) % pathsList.length;
+      final futurePathItems = pathsList[wrappedIndex]?.pathItems;
+
+      // final futurePathItems = pathsList[(currentItem.value + 2)]?.pathItems;
+      // print("FuturePathItems $futurePathItems");
+      if (futurePathItems?.length == 0) {
         lastPath.value = true;
 
       }

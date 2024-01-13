@@ -15,7 +15,8 @@ import '../../../components/customed_button.dart';
 import '../../../components/customed_form_field.dart';
 import '../../../const/style.dart';
 import '../../../helper/image_helper.dart';
-import '../../../helper/shared_handeller.dart';
+import '../../packages_screen/packages_screen.dart';
+import '../../teacher_screen/teacher_complete_data_sec_screen.dart';
 import '../login_screen/login_screen.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -124,7 +125,7 @@ class RegisterScreen extends StatelessWidget {
                               isDense: true,
                               border: OutlineInputBorder(),
                             ),
-                            hint: Text(controller.genderValue),
+                            hint: Text(controller.genderValue , textAlign: TextAlign.right,),
                             items: controller.genderList.map((value) {
                               return DropdownMenuItem<String>(
                                 value: value,
@@ -187,24 +188,32 @@ class RegisterScreen extends StatelessWidget {
                                         phone: controller.phoneNumberController,
                                         gender: controller.genderValue
                                     );
-                                    await SharedPreferanceHelper.saveData(key: 'username',value: controller.fullNameController.text);
-                                    await SharedPreferanceHelper.saveData(key: 'email',value: controller.emailController.text);
-                                    await SharedPreferanceHelper.saveData(key : 'phone',value: controller.phoneNumberController.text);
-                                    await SharedPreferanceHelper.saveData(  key: 'gender', value: controller.genderValue,);
-                                    await SharedPreferanceHelper.saveData(key: 'age',value: controller.ageController.text);
 
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(content: Text('تم التسجيل بنجاح!'),
-                                        backgroundColor: ColorStyle.primaryColor
-                                      ),
-                                    );
-                                    if(onBoardingController.isStudent == true){
-                                      Get.to(() => OTPScreen());
-                                      // print("roleId");
-                                      // print(onBoardingController.roleId);
-                                    } else if (onBoardingController.isStudent == false){
-                                      Get.to(() => OTPScreen());
-                                    }
+                                    // await SharedPreferanceHelper.saveData(key: 'username',value: controller.fullNameController.text);
+                                    // await SharedPreferanceHelper.saveData(key: 'email',value: controller.emailController.text);
+                                    // await SharedPreferanceHelper.saveData(key : 'phone',value: controller.phoneNumberController.text);
+                                    // await SharedPreferanceHelper.saveData(  key: 'gender', value: controller.genderValue,);
+                                    // await SharedPreferanceHelper.saveData(key: 'age',value: controller.ageController.text);
+
+                                    // ScaffoldMessenger.of(context).showSnackBar(
+                                    //   const SnackBar(content: Text('تم التسجيل بنجاح!'),
+                                    //     backgroundColor: ColorStyle.primaryColor
+                                    //   ),
+                                    // );
+
+                                    //
+                                    // if(onBoardingController.isStudent == true){
+                                    //   Get.to(() => OTPScreen());
+                                    //   // print("roleId");
+                                    //   // print(onBoardingController.roleId);
+                                    // } else if (onBoardingController.isStudent == false){
+                                    //   Get.to(() => OTPScreen());
+                                    // }
+                                    //
+                                    // onBoardingController.isStudent ?
+                                    // Get.to(PackagesScreen()):
+                                    // // Get.to(EduFavouriteFirstScreen()):
+                                    // Get.to(TeacherCompleteDataSecScreen());
 
                                   } else {
                                     print(' فشل انشاء الحساب ');
@@ -230,7 +239,6 @@ class RegisterScreen extends StatelessWidget {
                             onPressed: () {
                               Get.to(LoginScreen());
                             },
-
                           ),
 
                         ],

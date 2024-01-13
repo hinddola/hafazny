@@ -5,15 +5,12 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:hafazny/screens/auth_screens/controller/auth_controller.dart';
 import 'package:hafazny/screens/auth_screens/controller/auth_validation.dart';
 
-import '../../../helper/shared_handeller.dart';
-import '../otp_screen/otp_repo.dart';
 import 'forget_password_controller.dart';
 
 class OTPController extends GetxController with Validations{
 
   final GlobalKey<FormState> oTPFormKey = GlobalKey<FormState>();
 
-  final OTPRepo _otpRepo = OTPRepo();
   final authController = AuthController();
   final forgetPasswordController = ForgetPasswordController();
 

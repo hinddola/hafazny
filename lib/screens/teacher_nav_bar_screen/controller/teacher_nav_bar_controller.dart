@@ -6,10 +6,10 @@ import 'package:hafazny/screens/teacher_nav_bar_screen/calls_history_screen.dart
 import 'package:hafazny/screens/teacher_nav_bar_screen/main_screen.dart';
 
 class TeacherNavBarController extends GetxController {
-  RxBool isOnlinValue = true.obs;
+  RxBool isOnlinValue = false.obs;
 
-  final _selectIndex = 0.obs;
-  final currentIndex = 3.obs;
+  final _selectIndex = 3.obs;
+  final currentIndex = 0.obs;
   int get selectIndex => _selectIndex.value;
 
   select(int index) {

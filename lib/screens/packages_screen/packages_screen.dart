@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:hafazny/components/packaes_component.dart';
 
 import '../../components/customed_back_arrow.dart';
 import '../../components/customed_sized_button.dart';
 import '../../const/style.dart';
 import '../../helper/image_helper.dart';
+import '../edu_favorites_screens/controller/edu_favourites_controller.dart';
+import 'controller/packages_controller.dart';
 
 class PackagesScreen extends StatelessWidget {
-  const PackagesScreen({super.key});
+   PackagesScreen({super.key});
+
+  final packagesController = Get.put(PackagesController());
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +41,12 @@ class PackagesScreen extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(height: 20.h,),
-              PackagesComponent(),
-              PackagesComponent(),
-              PackagesComponent(),
+              GetBuilder<PackagesController>(
+                  builder: (packagesController){
+                    return PackagesComponent() ;
+                  }
+              )
+
             ],
           ),
         ),

@@ -12,7 +12,7 @@ import '../reservation_screen/reservation_screen.dart';
 import '../session_screen/session_screen.dart';
 
 class NavBarScreen extends StatelessWidget {
-  //bool? isTeacherNavBar;
+
   int currentIndex;
   NavBarScreen({
     required this.currentIndex,
@@ -23,19 +23,12 @@ class NavBarScreen extends StatelessWidget {
   final controller = Get.put(NavBarController());
 
   List<Widget> screens = [
-    MenuScreen(), //0
+    MenuScreen(isStudent: true,), //0
     SessionsScreen(), //1
     ReservationsScreen(isTeacherNavBar: false,), //2
     TeachersScreen(), //3
     StudentHomeScreen() //4
   ];
-
-  // List navBarscreens =[
-  //   MenuScreen(),
-  //   ReservationsScreen(isTeacherNavBar: true,),
-  //   CallsHistoryScreen(),
-  //   MainScreen(),
-  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -113,46 +106,3 @@ class NavBarScreen extends StatelessWidget {
     );
   }
 }
-
-// items: <BottomNavigationBarItem>[
-// BottomNavigationBarItem(
-// icon: SvgPicture.asset(
-// controller.navScreens[0]['icon'],
-// height: 25,
-// color: controller.selectIndex == 0
-// ? ColorStyle.primaryColor
-//     : ColorStyle.greyColor.withOpacity(.5),
-// ),
-// label: controller.navScreens[0]['title'],
-// ),
-// BottomNavigationBarItem(
-// icon: SvgPicture.asset(
-// controller.navScreens[1]['icon'],
-// height: 25,
-// color: controller.selectIndex == 1
-// ? ColorStyle.primaryColor
-//     : ColorStyle.greyColor.withOpacity(.5),
-// ),
-// label: controller.navScreens[1]['title'],
-// ),
-// BottomNavigationBarItem(
-// icon: SvgPicture.asset(
-// controller.navScreens[2]['icon'],
-// height: 25,
-// color: controller.selectIndex == 2
-// ? ColorStyle.primaryColor
-//     : ColorStyle.greyColor.withOpacity(.5),
-// ),
-// label: controller.navScreens[2]['title'],
-// ),
-// BottomNavigationBarItem(
-// icon: SvgPicture.asset(
-// controller.navScreens[3]['icon'],
-// height: 25,
-// color: controller.selectIndex == 3
-// ? ColorStyle.primaryColor
-//     : ColorStyle.greyColor.withOpacity(.5),
-// ),
-// label: controller.navScreens[3]['title'],
-// ),
-// ],

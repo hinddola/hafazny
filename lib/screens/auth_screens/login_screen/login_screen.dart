@@ -10,6 +10,7 @@ import 'package:hafazny/screens/auth_screens/controller/auth_controller.dart';
 import 'package:hafazny/screens/auth_screens/forget_password_screen/forget_password_screen.dart';
 import 'package:hafazny/screens/auth_screens/register_screen/register_screen.dart';
 import 'package:hafazny/screens/nav_bar_screen/nav_bar_screen.dart';
+import 'package:hafazny/screens/teacher_nav_bar_screen/teacher_nav_bar_screen.dart';
 
 import '../../../components/customed_back_arrow.dart';
 import '../../../components/customed_button.dart';
@@ -17,6 +18,7 @@ import '../../../components/customed_form_field.dart';
 import '../../../const/style.dart';
 import '../../../helper/image_helper.dart';
 import '../../../helper/shared_pref.dart';
+import '../../on_boarding_screens/controller/controller.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen ({Key? key}) : super(key: key);
@@ -25,6 +27,7 @@ class LoginScreen extends StatelessWidget {
   SharedPreferanceHelper sharedPref = SharedPreferanceHelper();
   LoginModel loginModel = LoginModel();
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+  final onBoardingController = OnBoardingController();
 
 
   @override
@@ -122,7 +125,13 @@ class LoginScreen extends StatelessWidget {
                                 email: controller.loginEmailController,
                                 password: controller.loginPasswordController
                             );
-                            // Get.to(NavBarScreen(currentIndex: 4,));
+
+                            // if(onBoardingController.isStudent == true){
+                            //   Get.to(NavBarScreen(currentIndex: 4,));
+                            // } else if (onBoardingController.isStudent == false){
+                            //   Get.to(() => TeacherNavBarScreen(currentIndex: 3));
+                            // }
+
                           },
                           child: Text(
                             '  تسجيل الدخول',
@@ -145,27 +154,6 @@ class LoginScreen extends StatelessWidget {
                           },
                           /*  textColor: textColor */
                         ),
-
-                        CustomButton(
-                          onPressed: (){
-                            print('بيانات العميل');
-
-                            print(SharedPreferanceHelper.getData(key: 'token'));
-                            print(SharedPreferanceHelper.getData( key: 'password'));
-                            print(SharedPreferanceHelper.getData( key: 'email'));
-
-
-
-                          } ,
-                          background:ColorStyle.skipTextColor
-                              .withOpacity(.1),
-                          child: Text(
-                            'عرض البيانات',
-                            style: TextStyleHelper.button16.copyWith(
-                              color: ColorStyle.skipTextColor,
-                            ),
-                          ),
-                        )
                       ],
                     )
 

@@ -45,7 +45,7 @@ class EkhtaratTeachersCard extends StatelessWidget {
               subtitle: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  TeacherDetailsText(isSessions: isSessions),
+                  //TeacherDetailsText(isSessions: isSessions),
                 ],
               ),
 
